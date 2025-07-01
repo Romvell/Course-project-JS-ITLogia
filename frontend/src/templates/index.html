@@ -1,0 +1,88 @@
+<header class="header">
+    <h1 class="header__title">Главная</h1>
+</header>
+<main class="main">
+    <div class="container">
+        <section class="filter">
+            <div class="filter__tabs">
+                <div class="tab-btn tab-btn_active">
+                    Сегодня
+                </div>
+                <div class="tab-btn tab-btn_passive">
+                    Неделя
+                </div>
+                <div class="tab-btn tab-btn_passive">
+                    Месяц
+                </div>
+                <div class="tab-btn tab-btn_passive">
+                    Год
+                </div>
+                <div class="tab-btn tab-btn_passive">
+                    Все
+                </div>
+                <div class="tab-btn tab-btn_passive">
+                    Интервал
+                </div>
+            </div>
+            <div class="filter__dates">
+                <label class="filter__label">с <input class="filter__input" type="date" placeholder="Date"></label>
+                <label class="filter__label">по <input class="filter__input" type="date" placeholder="Дата"></label>
+            </div>
+        </section>
+        <section class="charts">
+            <div class="panel">
+                <h2 class="panel__title">Доходы</h2>
+                <ul class="panel__keys keys">
+                    <li class="key">
+                        <strong class="key__percent color-1"></strong>
+                        <span class="key__choice">Red</span>
+                    </li>
+                    <li class="key">
+                        <strong class="key__percent color-2"></strong>
+                        <span class="key__choice">Orange</span>
+                    </li>
+                    <li class="key">
+                        <strong class="key__percent color-3"></strong>
+                        <span class="key__choice">Yellow</span>
+                    </li>
+                    <li class="key">
+                        <strong class="key__percent color-4"></strong>
+                        <span class="key__choice">Green</span>
+                    </li>
+                    <li class="key">
+                        <strong class="key__percent color-5"></strong>
+                        <span class="key__choice">Blue</span>
+                    </li>
+                </ul>
+                <div class="panel__chart chart chart_income"></div>
+            </div>
+            <div class="border"></div>
+            <div class="panel">
+                <h2 class="panel__title">Расходы</h2>
+                <ul class="panel__keys keys">
+                    <li class="key">
+                        <strong class="key__percent color-1"></strong>
+                        <span class="key__choice">Red</span>
+                    </li>
+                    <li class="key">
+                        <strong class="key__percent color-2"></strong>
+                        <span class="key__choice">Orange</span>
+                    </li>
+                    <li class="key">
+                        <strong class="key__percent color-3"></strong>
+                        <span class="key__choice">Yellow</span>
+                    </li>
+                    <li class="key">
+                        <strong class="key__percent color-4"></strong>
+                        <span class="key__choice">Green</span>
+                    </li>
+                    <li class="key">
+                        <strong class="key__percent color-5"></strong>
+                        <span class="key__choice">Blue</span>
+                    </li>
+                </ul>
+                <div class="panel__chart chart chart_expense"></div>
+            </div>
+        </section>
+    </div>
+</main>
