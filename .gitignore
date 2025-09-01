@@ -1,8 +1,4 @@
 backend/
 .idea/
-Backend for JS project.postman_collection.json
-commands.txt
-openapi.yaml
-ТЗ Фронтенд-проект на JS.docx
 frontend/dist/
 frontend/node_modules/

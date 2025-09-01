@@ -1,10 +1,11 @@
-import {Lumincoin} from "./components/lumincoin";
-import {Signup} from "./components/signup";
-import {Login} from "./components/login";
+import {Lumincoin} from "./components/lumincoin.js";
+import {Form} from "./components/form.js";
+import {Logout} from "./components/logout.js";
 
 export class Router {
     constructor() {
         this.titlePageElement = document.getElementById('title');
+        this.stylesElement = document.getElementById('common-styles');
         this.contentPageElement = document.getElementById('content');
         this.initEvents();
         this.routes = [
@@ -15,7 +16,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/index.css',
                 load: () => {
-                    new Lumincoin();
+                    new Lumincoin(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -23,9 +24,9 @@ export class Router {
                 title: 'Регистрация',
                 template: '/templates/signup.html',
                 useLayout: false,
-                // styles: 'styles/form.css',
+                styles: ['form.css'],
                 load: () => {
-                    new Signup('signup');
+                    new Form('signup', this.openNewRoute.bind(this));
                 },
             },
             {
@@ -33,10 +34,20 @@ export class Router {
                 title: 'Вход в систему',
                 template: '/templates/login.html',
                 useLayout: false,
-                // styles: 'styles/form.css',
+                styles: ['form.css'],
                 load: () => {
-                    new Login('login');
+                    //document.body.classList.add('login-page') //добавление классов к body
+                    new Form('login', this.openNewRoute.bind(this));
                 },
+                unload: () => {
+                    //document.body.classList.remove('login-page') //удаление классов из body
+                }
+            },
+            {
+                route: '/logout',
+                load: () => {
+                    new Logout(this.openNewRoute.bind(this));
+                }
             },
             {
                 route: '/income&expense',
@@ -45,7 +56,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //new Loogin('login');
                 },
             },
             {
@@ -55,7 +66,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //new Loogin('login');
                 },
             },
             {
@@ -65,7 +76,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //new Loogin('login');
                 },
             },
             {
@@ -75,7 +86,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //new Loogin('login');
                 },
             },
             {
@@ -85,7 +96,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //new Loogin('login');
                 },
             },
             {
@@ -95,7 +106,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //;
                 },
             },
             {
@@ -105,7 +116,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //new Loogin('login');
                 },
             },
             {
@@ -115,7 +126,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //new Loogin('login');
                 },
             },
             {
@@ -125,7 +136,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Login('login');
+                    //new Loogin('login');
                 },
             },
             {
@@ -135,7 +146,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    // new Login('login');
+                    // new Loogin('login');
                 },
             },
             {
@@ -145,7 +156,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    // new Login('login');
+                    // new Loogin('login');
                 },
             },
             {
@@ -155,7 +166,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    // new Login('login');
+                    // new Loogin('login');
                 },
             },
             {
@@ -165,7 +176,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    // new Login('login');
+                    // new Loogin('login');
                 },
             },
         ]
@@ -174,10 +185,16 @@ export class Router {
     initEvents() {
         window.addEventListener('DOMContentLoaded', this.activateRoute.bind(this));
         window.addEventListener('popstate', this.activateRoute.bind(this));
-        document.addEventListener('click', this.openNewRoute.bind(this));
+        document.addEventListener('click', this.clickHandler.bind(this));
     }
 
-    async openNewRoute(e) {
+    async openNewRoute(url) {
+        const currentRoute = window.location.pathname;
+        history.pushState({}, '', url);
+        await this.activateRoute(null, currentRoute);
+    }
+
+    async clickHandler(e) {
         let element = null;
         if (e.target.nodeName === 'A') {
             element = e.target;
@@ -193,25 +210,51 @@ export class Router {
                 return;
             }
 
-            history.pushState({}, '', url);
-            await this.activateRoute();
+            await this.openNewRoute(url);
         }
     }
 
-    async activateRoute() {
+    async activateRoute(e, oldRoute = null) {
+        if (oldRoute) {
+            const currentRoute = this.routes.find(item => item.route === oldRoute);
+            if (currentRoute && currentRoute.styles && currentRoute.styles.length > 0) {
+                currentRoute.styles.forEach(style => {
+                    document.querySelector(`link[href='/styles/${style}']`).remove();
+                })
+            }
+
+            if (currentRoute && currentRoute.unload && typeof currentRoute.unload === 'function') {
+                currentRoute.unload();
+            }
+        }
+
         const urlRoute = window.location.pathname;
         const newRoute = this.routes.find(item => item.route === urlRoute);
-        console.log(urlRoute + ', ' + newRoute.route);
         if (newRoute) {
+            if (newRoute.styles && newRoute.styles.length > 0) {
+                newRoute.styles.forEach(style => {
+                    const link = document.createElement('link');
+                    link.rel = 'stylesheet';
+                    link.href = '/styles/' + style;
+                    this.stylesElement.after(link);
+                });
+            }
             if (newRoute.title) {
                 this.titlePageElement.innerText = newRoute.title;
             }
             if (newRoute.template) {
+
                 let contentBlock = this.contentPageElement;
                 if (newRoute.useLayout) {
                     this.contentPageElement.innerHTML =
                         await fetch(newRoute.useLayout).then(response => response.text());
                     contentBlock = document.getElementById('content-layout');
+                    //Добавляем и удаляем классы из body по необходимости
+                    //     document.body.classList.add('sidebar-mini');
+                    //     document.body.classList.add('layout-fixed');
+                    // } else {
+                    //     document.body.classList.remove('sidebar-mini');
+                    //     document.body.classList.remove('layout-fixed');
                 }
                 contentBlock.innerHTML =
                     await fetch(newRoute.template).then(response => response.text());
@@ -222,8 +265,8 @@ export class Router {
             }
         } else {
             console.log('Страница не найдена');
-            history.pushState({}, '', '/');
-            await this.activateRoute();
+            history.pushState({}, '', '/'); //url:'/404'
+            await this.activateRoute(e); //e-проверить
         }
     }
 }
