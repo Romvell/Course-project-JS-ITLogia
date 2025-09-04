@@ -1,6 +1,7 @@
 import {Lumincoin} from "./components/lumincoin.js";
 import {Form} from "./components/form.js";
 import {Logout} from "./components/logout.js";
+import {IncomeExpense} from "./components/income&expense";
 
 export class Router {
     constructor() {
@@ -56,7 +57,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Loogin('login');
+                    new IncomeExpense(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -66,7 +67,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Loogin('login');
+                    new Income(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -76,7 +77,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Loogin('login');
+                    new IncomeAdd(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -86,7 +87,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Loogin('login');
+                    new IncomeEdit(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -96,7 +97,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Loogin('login');
+                    new Expense(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -106,7 +107,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //;
+                    new ExpenseAdd(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -116,7 +117,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Loogin('login');
+                    new ExpenseEdit(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -126,7 +127,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Loogin('login');
+                    new CategoryAdd(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -136,7 +137,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    //new Loogin('login');
+                    new CategoryEdit(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -146,7 +147,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    // new Loogin('login');
+                    new ModalWindow(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -156,7 +157,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    // new Loogin('login');
+                    new ModalWindow(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -166,7 +167,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    // new Loogin('login');
+                    new ModalWindow(this.openNewRoute.bind(this));
                 },
             },
             {
@@ -176,7 +177,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    // new Loogin('login');
+                    new ModalWindow(this.openNewRoute.bind(this));
                 },
             },
         ]

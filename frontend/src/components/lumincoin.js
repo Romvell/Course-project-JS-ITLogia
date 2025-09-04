@@ -3,7 +3,6 @@ import {Auth} from "../services/auth.js";
 
 export class Lumincoin {
     constructor(openNewRoute) {
-        //console.log('Lumincoin Finance');
         this.openNewRoute = openNewRoute;
         this.getCategories().then();
     }

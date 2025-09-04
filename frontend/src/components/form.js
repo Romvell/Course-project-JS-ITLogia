@@ -7,6 +7,10 @@ export class Form {
         this.processElement = null;
         this.page = page;
         this.openNewRoute = openNewRoute;
+        this.serverAlert = document.getElementById('server-alert');
+
+        this.serverAlert.innerText = '';
+        this.serverAlert.classList.add('hide');
 
         const accessToken = Auth.getAuthInfo(Auth.accessTokenKey);
         if (accessToken && typeof accessToken !== undefined) {
@@ -89,36 +93,42 @@ export class Form {
     };
 
     validateForm() {
-        const validForm = this.fields.every(item => item.valid);
+        let validForm = this.fields.every(item => item.valid);
         if (!validForm) {
             this.fields.forEach(item => {
                 if (!item.valid) {
                     item.element.style.borderColor = '#B00020';
-                    //item.element.parentNode.nextElementSibling.classList.remove('hide');
+                    item.element.parentNode.nextElementSibling.classList.remove('hide');
                 }
             })
-            this.processElement.setAttribute('disabled', 'disabled');
-        } else {
-            this.processElement.removeAttribute('disabled');
+        }
+        // Проверка на совпадение паролей
+        const passwordElement = document.getElementById('password');
+        const passwordRepeatElement = document.getElementById('password-repeat');
+        if (this.page === 'signup') {
+            if (passwordElement.value !== passwordRepeatElement.value) {
+                validForm = false;
+                passwordElement.style.borderColor = '#B00020';
+                passwordRepeatElement.style.borderColor = '#B00020';
+                this.serverAlert.innerText = 'Пароли не совпадают.';
+                this.serverAlert.classList.remove('hide');
+            }
         }
         return validForm;
     };
 
     async processForm() {
-        let serverAlert = document.getElementById('server-alert');
-        serverAlert.innerText = '';
-        serverAlert.classList.add('hide');
         if (this.validateForm()) {
-            const email = this.fields.find(item => item.name === 'email').element.value;
-            const password = this.fields.find(item => item.name === 'password').element.value;
+            const email = this.fields.find(item => item.id === 'email').element.value;
+            const password = this.fields.find(item => item.id === 'password').element.value;
             if (this.page === 'signup') {
                 try {
                     const result = await CustomHttp.request('/signup', 'POST', false, {
-                        name: this.fields.find(item => item.name === 'name').element.value,
-                        lastName: this.fields.find(item => item.name === 'lastName').element.value,
+                        name: this.fields.find(item => item.id === 'name').element.value,
+                        lastName: this.fields.find(item => item.id === 'last-name').element.value,
                         email: email,
                         password: password,
-                        passwordRepeat: this.fields.find(item => item.name === 'passwordRepeat').element.value,
+                        passwordRepeat: this.fields.find(item => item.id === 'password-repeat').element.value,
                     });
 
                     if (result) {
@@ -127,8 +137,8 @@ export class Form {
                         }
                     }
                 } catch (error) {
-                    serverAlert.innerText = 'Server ' + error;
-                    serverAlert.classList.remove('hide');
+                    this.serverAlert.innerText = 'Server ' + error;
+                    this.serverAlert.classList.remove('hide');
                     return console.log(error);
                 }
             }
@@ -160,8 +170,8 @@ export class Form {
                 }
             } catch (error) {
                 console.log('Ошибка:' + error.message);
-                serverAlert.innerText = 'Server error: ' + error.message;
-                serverAlert.classList.remove('hide');
+                this.serverAlert.innerText = 'Server error: ' + error.message;
+                this.serverAlert.classList.remove('hide');
             }
         }
     }
