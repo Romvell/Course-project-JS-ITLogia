@@ -1,0 +1,16 @@
+.alert-message {
+    color: var(--error);
+    font-size: 12px;
+    align-self: flex-start;
+}
+
+.alert-server-message {
+    max-width: 397px;
+    height: 38px;
+    border-radius: 4px;
+    border: 1px solid var(--error);
+    outline: none;
+    width: 100vh;
+    padding: 11px;
+    background-color: #ffcece;
+}

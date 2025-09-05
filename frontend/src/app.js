@@ -1,9 +1,9 @@
 import "./styles/common.scss"
-import {Router} from "./router";
+import {Router} from "./router.js";
 
 class App {
     constructor() {
-        new Router();
+        this.router = new Router();
     }
 }
 
