@@ -1,6 +1,6 @@
 import {Auth} from "../services/auth.js";
 
-export class CategoryAdd {
+export class OperationAdd {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
         const accessToken = Auth.getAuthInfo(Auth.accessTokenKey);

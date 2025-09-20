@@ -6,7 +6,7 @@ export class Income {
         const accessToken = Auth.getAuthInfo(Auth.accessTokenKey);
         if (!accessToken || typeof accessToken === undefined) {
             this.openNewRoute('/login');
-            return;
+            //return;
         }
     }
 }

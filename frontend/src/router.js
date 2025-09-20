@@ -2,6 +2,15 @@ import {Lumincoin} from "./components/lumincoin.js";
 import {Form} from "./components/form.js";
 import {Logout} from "./components/logout.js";
 import {IncomeExpense} from "./components/income&expense";
+import {Income} from "./components/income.js";
+import {ModalWindow} from "./components/modalWindow.js";
+import {OperationAdd} from "./components/operationAdd";
+import {IncomeAdd} from "./components/incomeAdd";
+import {IncomeEdit} from "./components/incomeEdit";
+import {Expense} from "./components/expense";
+import {ExpenseAdd} from "./components/expenseAdd";
+import {ExpenseEdit} from "./components/expenseEdit";
+import {CategoryEdit} from "./components/categoryEdit";
 
 export class Router {
     constructor() {
@@ -71,9 +80,9 @@ export class Router {
                 },
             },
             {
-                route: '/incomeAdd',
+                route: '/incomeCategoryAdd',
                 title: 'Lumincoin Finance - Создание категории доходов',
-                template: '/templates/income-add.html',
+                template: '/templates/income-category-add.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
@@ -81,9 +90,9 @@ export class Router {
                 },
             },
             {
-                route: '/incomeEdit',
+                route: '/incomeCategoryEdit',
                 title: 'Lumincoin Finance - Редактирование категории доходов',
-                template: '/templates/income-edit.html',
+                template: '/templates/income-category-edit.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
@@ -101,9 +110,9 @@ export class Router {
                 },
             },
             {
-                route: '/expenseAdd',
+                route: '/expenseCategoryAdd',
                 title: 'Lumincoin Finance - Создание категории расходов',
-                template: '/templates/expense-add.html',
+                template: '/templates/expense-category-add.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
@@ -111,9 +120,9 @@ export class Router {
                 },
             },
             {
-                route: '/expenseEdit',
+                route: '/expenseCategoryEdit',
                 title: 'Lumincoin Finance - Редактирование категории расходов',
-                template: '/templates/expense-edit.html',
+                template: '/templates/expense-category-edit.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
@@ -121,17 +130,27 @@ export class Router {
                 },
             },
             {
-                route: '/categoryAdd',
-                title: 'Lumincoin Finance - Создание дохода/расхода',
-                template: '/templates/category-add.html',
+                route: '/incomeAdd',
+                title: 'Lumincoin Finance - Создание дохода',
+                template: '/templates/operation-add.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new CategoryAdd(this.openNewRoute.bind(this));
+                    new OperationAdd(this.openNewRoute.bind(this));
                 },
             },
             {
-                route: '/categoryEdit',
+                route: '/expenseAdd',
+                title: 'Lumincoin Finance - Создание /расхода',
+                template: '/templates/operation-add.html',
+                useLayout: '/templates/layout.html',
+                // styles: 'styles/form.css',
+                load: () => {
+                    new OperationAdd(this.openNewRoute.bind(this));
+                },
+            },
+            {
+                route: '/incomeEdit',
                 title: 'Lumincoin Finance - Редактирование дохода/расхода',
                 template: '/templates/category-edit.html',
                 useLayout: '/templates/layout.html',

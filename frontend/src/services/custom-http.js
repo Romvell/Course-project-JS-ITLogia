@@ -54,7 +54,6 @@ export class CustomHttp {
                     }
                 }
             }
-            //throw new Error(response.message);
         }
 
         return result;

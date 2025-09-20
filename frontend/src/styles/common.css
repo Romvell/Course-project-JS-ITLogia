@@ -435,6 +435,10 @@
     gap: 20px;
 }
 
+.tab-input {
+    display: none;
+}
+
 .tab-btn {
     width: 100px;
     height: 37px;
@@ -447,6 +451,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.tab-input:checked + label {
+    background-color: var(--plaseholder-text-color);
+    color: var(--main-color);
+}
+
+.tab-input:not(:checked) + label {
+    background-color: var(--main-color);
+    color: var(--plaseholder-text-color);
 }
 
 .tab-btn_active {
@@ -735,6 +751,10 @@
 
 .table__td_bold {
     font-family: "Roboto-bold", sans-serif;
+}
+
+.table__tab-nums {
+    font-variant-numeric: tabular-nums;
 }
 
 .table__link {
