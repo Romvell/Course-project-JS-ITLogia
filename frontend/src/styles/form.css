@@ -1,9 +1,3 @@
-.alert-message {
-    color: var(--error);
-    font-size: 12px;
-    align-self: flex-start;
-}
-
 .alert-server-message {
     max-width: 397px;
     height: 38px;

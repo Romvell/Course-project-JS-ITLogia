@@ -10,7 +10,6 @@ import {IncomeEdit} from "./components/incomeEdit";
 import {Expense} from "./components/expense";
 import {ExpenseAdd} from "./components/expenseAdd";
 import {ExpenseEdit} from "./components/expenseEdit";
-import {CategoryEdit} from "./components/categoryEdit";
 
 export class Router {
     constructor() {
@@ -30,6 +29,7 @@ export class Router {
                 },
             },
             {
+                // Готово
                 route: '/signup',
                 title: 'Регистрация',
                 template: '/templates/signup.html',
@@ -40,6 +40,7 @@ export class Router {
                 },
             },
             {
+                // Готово
                 route: '/login',
                 title: 'Вход в систему',
                 template: '/templates/login.html',
@@ -54,12 +55,14 @@ export class Router {
                 }
             },
             {
+                // Готово
                 route: '/logout',
                 load: () => {
                     new Logout(this.openNewRoute.bind(this));
                 }
             },
             {
+                // Готово
                 route: '/income&expense',
                 title: 'Lumincoin Finance - Доходы и расходы',
                 template: '/templates/income&expense.html',
@@ -130,33 +133,36 @@ export class Router {
                 },
             },
             {
+                // Готово
                 route: '/incomeAdd',
                 title: 'Lumincoin Finance - Создание дохода',
-                template: '/templates/operation-add.html',
+                template: '/templates/operation-page.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new OperationAdd(this.openNewRoute.bind(this));
+                    new OperationAdd('income', this.openNewRoute.bind(this));
                 },
             },
             {
+                // Готово
                 route: '/expenseAdd',
                 title: 'Lumincoin Finance - Создание /расхода',
-                template: '/templates/operation-add.html',
+                template: '/templates/operation-page.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new OperationAdd(this.openNewRoute.bind(this));
+                    new OperationAdd('expense', this.openNewRoute.bind(this));
                 },
             },
             {
-                route: '/incomeEdit',
+                // Готово
+                route: '/operationEdit',
                 title: 'Lumincoin Finance - Редактирование дохода/расхода',
-                template: '/templates/category-edit.html',
+                template: '/templates/operation-page.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new CategoryEdit(this.openNewRoute.bind(this));
+                    new OperationAdd('operationEdit', this.openNewRoute.bind(this));
                 },
             },
             {
@@ -190,6 +196,7 @@ export class Router {
                 },
             },
             {
+                // Готово
                 route: '/modalOperationDel',
                 title: 'Lumincoin Finance - Удалить операцию',
                 template: '/templates/modal-operation-del.html',

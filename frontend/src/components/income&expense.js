@@ -4,6 +4,7 @@ import {CustomHttp} from "../services/custom-http";
 export class IncomeExpense {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
+        this.firstUseFlag = false;
         // Значения фильтра по умолчанию
         this.dateFrom = this.dateFormat(null); // от 01.01.1970
         this.dateTo = this.dateFormat(); // до текущей даты
@@ -15,10 +16,23 @@ export class IncomeExpense {
             return;
         }
 
+        // Определяем начальное состояние фильтра и делаем соответствующий запрос
+        const radioButton = document
+            .querySelectorAll('input[type="radio"][name="filter"]');
+        if (!this.firstUseFlag) {
+            radioButton.forEach(radio => {
+                if (radio.checked) {
+                    this.operationsFilter(radio.value);
+                    this.firstUseFlag = true;
+                }
+            });
+        }
+
         // Вызов функции при нажатии на кнопку фильтра
         document.querySelectorAll('input[type="radio"][name="filter"]')
             .forEach(radio => {
                 radio.addEventListener('click', () => this.operationsFilter(radio.value));
+                this.firstUseFlag = true;
             });
     }
 
@@ -94,7 +108,7 @@ export class IncomeExpense {
     showOperations(operations) {
         // Находим таблицу
         const operationsElement = document.getElementById('operations');
-        operationsElement.replaceChildren(); // Удаляем старые данные
+        operationsElement.replaceChildren(); // Удаляем старые данные.
         // Создаём и заполняем строки таблицы
         for (let i = 0; i < operations.response.length; i++) {
             const trElement = document.createElement('tr');
@@ -122,16 +136,14 @@ export class IncomeExpense {
                 .toLocaleDateString('ru-RU');
             trElement.insertCell().innerText = operations.response[i].comment;
             const trash = document.getElementById('trash');
-            //trElement.insertCell().innerHTML = trash.outerHTML;
-            trElement.insertCell().innerHTML = '<a href="/modalOperationDel?page=' + (i + 1) + '" class="table__link">' +
-                trash.outerHTML + '</a>';
+            trElement.insertCell().innerHTML = '<a href="/modalOperationDel?id=' + operations.response[i].id
+                + '" class="table__link">' + trash.outerHTML + '</a>';
             const pen = document.getElementById('pen');
-            trElement.insertCell().innerHTML = '<a href="/categoryEdit" class="table__link">' + pen.outerHTML + '</a>';
+            trElement.insertCell().innerHTML = '<a href="/operationEdit?id=' + operations.response[i].id
+                + '" class="table__link">' + pen.outerHTML + '</a>';
 
             trElement.classList.add("table__row")
             operationsElement.appendChild(trElement);
-
-            console.log(operations.response[i]);
         }
     }
 }

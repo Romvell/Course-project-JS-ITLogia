@@ -775,3 +775,9 @@
     background-position: right 12px top 50%, 0 0;
     background-size: 15px auto, 100%;
 }
+
+.alert-message {
+    color: var(--error);
+    font-size: 12px;
+    align-self: flex-start;
+}

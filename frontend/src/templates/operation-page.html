@@ -1,0 +1,25 @@
+<header class="header">
+    <h1 id="operation-title" class="header__title title"></h1>
+</header>
+<main class="main">
+    <div class="container">
+        <form action="#" class="form container__input">
+            <input type="text" id="selectOperationType" class="category-input" placeholder="Тип...">
+            <select name="Categories" id="selectCategories" class="select category-input">
+                <option class="select__option"></option>
+            </select>
+            <input type="text" id="sum" class="category-input" placeholder="Сумма в $...">
+            <div class="alert-message ml-15 mb-10 hide">Введите сумму</div>
+            <input type="date" id="date" class="category-input" placeholder="Дата...">
+            <div class="alert-message ml-15 mb-10 hide">Введите дату</div>
+            <input type="text" id="comment" class="category-input" placeholder="Комментарий...">
+        </form>
+        <div class="block-btn">
+            <button id="operation-ok-btn" class="category-btn category-btn_green"></button>
+            <!--            <a rel="stylesheet" href="/income&expense" class="category-btn category-btn_green">Создать</a>-->
+            <a rel="stylesheet" href="/income&expense" class="category-btn category-btn_red">Отмена</a>
+<!--            <button id="category-btn-cansel" class="category-btn category-btn_red">Отмена</button>-->
+            <!--            <a rel="stylesheet" href="/income&expense" class="category-btn category-btn_red">Отмена</a>-->
+        </div>
+    </div>
+</main>
