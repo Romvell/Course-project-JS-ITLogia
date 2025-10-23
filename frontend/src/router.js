@@ -2,12 +2,11 @@ import {Lumincoin} from "./components/lumincoin.js";
 import {Form} from "./components/form.js";
 import {Logout} from "./components/logout.js";
 import {IncomeExpense} from "./components/income&expense";
-import {Income} from "./components/income.js";
+import {Categories} from "./components/categories.js";
 import {ModalWindow} from "./components/modalWindow.js";
 import {OperationAdd} from "./components/operationAdd";
 import {IncomeAdd} from "./components/incomeAdd";
 import {IncomeEdit} from "./components/incomeEdit";
-import {Expense} from "./components/expense";
 import {ExpenseAdd} from "./components/expenseAdd";
 import {ExpenseEdit} from "./components/expenseEdit";
 
@@ -73,13 +72,14 @@ export class Router {
                 },
             },
             {
+                // Готово
                 route: '/income',
                 title: 'Lumincoin Finance - Доходы',
-                template: '/templates/income.html',
+                template: '/templates/categories.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new Income(this.openNewRoute.bind(this));
+                    new Categories('income', this.openNewRoute.bind(this));
                 },
             },
             {
@@ -103,13 +103,14 @@ export class Router {
                 },
             },
             {
+                // Готово
                 route: '/expense',
                 title: 'Lumincoin Finance - Расходы',
-                template: '/templates/expense.html',
+                template: '/templates/categories.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new Expense(this.openNewRoute.bind(this));
+                    new Categories('expense', this.openNewRoute.bind(this));
                 },
             },
             {
@@ -203,7 +204,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new ModalWindow(this.openNewRoute.bind(this));
+                    new ModalWindow('operation', this.openNewRoute.bind(this));
                 },
             },
         ]
