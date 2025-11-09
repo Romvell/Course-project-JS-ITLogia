@@ -5,17 +5,19 @@ import {IncomeExpense} from "./components/income&expense";
 import {Categories} from "./components/categories.js";
 import {ModalWindow} from "./components/modalWindow.js";
 import {OperationAdd} from "./components/operationAdd";
-import {IncomeAdd} from "./components/incomeAdd";
-import {IncomeEdit} from "./components/incomeEdit";
-import {ExpenseAdd} from "./components/expenseAdd";
-import {ExpenseEdit} from "./components/expenseEdit";
+import {Auth} from "./services/auth";
+import {RequestManager} from "./services/request-manager";
+import {CategoryAdd} from "./components/categoryAdd";
+import {CategoryEdit} from "./components/categoryEdit";
 
 export class Router {
     constructor() {
         this.titlePageElement = document.getElementById('title');
         this.stylesElement = document.getElementById('common-styles');
         this.contentPageElement = document.getElementById('content');
+
         this.initEvents();
+
         this.routes = [
             {
                 route: '/',
@@ -83,23 +85,24 @@ export class Router {
                 },
             },
             {
+                // Готово
                 route: '/incomeCategoryAdd',
                 title: 'Lumincoin Finance - Создание категории доходов',
-                template: '/templates/income-category-add.html',
+                template: '/templates/category-add.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new IncomeAdd(this.openNewRoute.bind(this));
+                    new CategoryAdd('income', this.openNewRoute.bind(this));
                 },
             },
             {
                 route: '/incomeCategoryEdit',
                 title: 'Lumincoin Finance - Редактирование категории доходов',
-                template: '/templates/income-category-edit.html',
+                template: '/templates/category-edit.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new IncomeEdit(this.openNewRoute.bind(this));
+                    new CategoryEdit('income', this.openNewRoute.bind(this));
                 },
             },
             {
@@ -114,28 +117,29 @@ export class Router {
                 },
             },
             {
+                // Готово
                 route: '/expenseCategoryAdd',
                 title: 'Lumincoin Finance - Создание категории расходов',
-                template: '/templates/expense-category-add.html',
+                template: '/templates/category-add.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new ExpenseAdd(this.openNewRoute.bind(this));
+                    new CategoryAdd('expense', this.openNewRoute.bind(this));
                 },
             },
             {
                 route: '/expenseCategoryEdit',
                 title: 'Lumincoin Finance - Редактирование категории расходов',
-                template: '/templates/expense-category-edit.html',
+                template: '/templates/category-edit.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new ExpenseEdit(this.openNewRoute.bind(this));
+                    new CategoryEdit('expense', this.openNewRoute.bind(this));
                 },
             },
             {
                 // Готово
-                route: '/incomeAdd',
+                route: '/dd',
                 title: 'Lumincoin Finance - Создание дохода',
                 template: '/templates/operation-page.html',
                 useLayout: '/templates/layout.html',
@@ -169,31 +173,33 @@ export class Router {
             {
                 route: '/modal',
                 title: 'Выход из системы',
-                template: '/templates/modalWindow.html',
+                template: '/templates/modal-operation-del.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new ModalWindow(this.openNewRoute.bind(this));
+                    new ModalWindow('logout', this.openNewRoute.bind(this));
                 },
             },
             {
+                // Готово
                 route: '/modalIncomeDel',
                 title: 'Lumincoin Finance - Удалить категорию',
-                template: '/templates/modal-income-del.html',
+                template: '/templates/modal-operation-del.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new ModalWindow(this.openNewRoute.bind(this));
+                    new ModalWindow('income', this.openNewRoute.bind(this));
                 },
             },
             {
+                // Готово
                 route: '/modalExpenseDel',
                 title: 'Lumincoin Finance - Удалить категорию',
-                template: '/templates/modal-expense-del.html',
+                template: '/templates/modal-operation-del.html',
                 useLayout: '/templates/layout.html',
                 // styles: 'styles/form.css',
                 load: () => {
-                    new ModalWindow(this.openNewRoute.bind(this));
+                    new ModalWindow('expense', this.openNewRoute.bind(this));
                 },
             },
             {
@@ -277,6 +283,21 @@ export class Router {
                     this.contentPageElement.innerHTML =
                         await fetch(newRoute.useLayout).then(response => response.text());
                     contentBlock = document.getElementById('content-layout');
+
+                    // Получение и отображение имени пользователя
+                    this.userName = document.getElementById('user-name');
+                    let userInfo = Auth.getAuthInfo();
+                    userInfo = JSON.parse(userInfo.userInfo);
+                    if (userInfo) {
+                        this.userName.innerText = userInfo.name + ' ' + userInfo.lastName;
+                    }
+
+                    // Получение и отображение имени баланса счёта
+                    const balance = await RequestManager.getBalance();
+                    if (balance) {
+                        document.getElementById('balance').innerText = balance.balance + ' $';
+                    }
+
                     //Добавляем и удаляем классы из body по необходимости
                     //     document.body.classList.add('sidebar-mini');
                     //     document.body.classList.add('layout-fixed');

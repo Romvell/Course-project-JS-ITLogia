@@ -611,7 +611,7 @@
 }
 
 .category-item {
-    height: 121px;
+    min-height: 121px;
     max-width: 352px;
     flex-grow: 1;
     flex-basis: 352px;

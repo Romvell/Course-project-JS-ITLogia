@@ -12,7 +12,7 @@ export class OperationAdd {
         this.sumElement = document.getElementById('sum'); // Поле Сумма
         this.dateElement = document.getElementById('date'); // Поле дата
         this.commentElement = document.getElementById('comment'); // Поле комментарий
-        this.btnOkElement = document.getElementById('operation-ok-btn');
+        this.btnOkElement = document.getElementById('operation-ok-btn'); // Кнопка Ок
         this.categories = {}; // Категории операций
         this.operation = {}; // Редактируемая операция
 
@@ -181,6 +181,7 @@ export class OperationAdd {
     validateForm() {
         let sumValid = false;
         let dateValid = false;
+        let categoryValid = false;
         if (!(this.sumElement.value.match(/^\d*(\,\d{1,2})?$/)) || this.sumElement.value === '') {
             this.sumElement.style.borderColor = '#B00020';
             this.sumElement.style.borderWidth = '2px';
@@ -201,8 +202,18 @@ export class OperationAdd {
             this.dateElement.nextElementSibling.classList.add('hide');
             dateValid = true
         }
+        if (!this.categoriesElement.value) {
+            this.categoriesElement.style.borderColor = '#B00020';
+            this.categoriesElement.style.borderWidth = '2px';
+            this.categoriesElement.nextElementSibling.classList.remove('hide');
+            categoryValid = false
+        } else {
+            this.categoriesElement.removeAttribute('style');
+            this.categoriesElement.nextElementSibling.classList.add('hide');
+            categoryValid = true
+        }
 
-        return (sumValid && dateValid);
+        return (sumValid && dateValid && categoryValid);
     }
 
     // Создание списка категорий в форме

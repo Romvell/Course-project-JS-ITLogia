@@ -31,7 +31,8 @@ export class Categories {
     async createCategoriesPage(operationType) {
         this.categoriesElement.replaceChildren(); // Удаляем старые данные.
         let categories = await this.getCategories(operationType)
-        categories.forEach(category => {
+        if (categories) {
+            categories.forEach(category => {
             const categoryElement = document.createElement('div');
             const categoryTitle = document.createElement('div');
             categoryTitle.classList.add('category-item__title', 'title');
@@ -62,5 +63,9 @@ export class Categories {
         categoryElement.appendChild(plusBtn);
         categoryElement.classList.add('category-item');
         this.categoriesElement.appendChild(categoryElement);
+        } else {
+            this.openNewRoute('/');
+        }
+
     }
 }

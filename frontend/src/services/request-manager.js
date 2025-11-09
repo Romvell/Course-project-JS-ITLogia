@@ -21,4 +21,21 @@ export class RequestManager {
             console.log('Неправильный тип операции');
         }
     }
+
+    // Запрос баланса с бека
+    static async getBalance() {
+        try {
+            const url = '/balance';
+            const result = await CustomHttp.request(url);
+            if (result) {
+                if (result.error || !result.response) {
+                    console.log(result);
+                    throw new Error(result.error.message);
+                }
+                return result.response;
+            }
+        } catch (error) {
+            console.log('Ошибка :' + error.message);
+        }
+    }
 }

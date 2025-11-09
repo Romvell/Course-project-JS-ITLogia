@@ -1,23 +1,17 @@
 <header class="header">
-    <h1 class="header__title title">Редактирование дохода/расхода</h1>
+    <h1 id="category-edit-title" class="header__title title"></h1>
 </header>
 <main class="main">
     <div class="container">
-        <form action="#" class="form container__input">
-            <select name="Type" id="#" class="select category-input" placeholder="Тип...">
-                <option value="" class="select__option">доход</option>
-                <option value="" class="select__option">расход</option>
-            </select>
-            <input type="text" class="category-input" placeholder="Категория...">
-            <input type="text" class="category-input" placeholder="Сумма в $...">
-            <input type="date" class="category-input" placeholder="Дата...">
-            <input type="text" class="category-input" placeholder="Комментарий...">
-        </form>
+        <div class="container__input">
+            <input type="text" id="category-edit-input" class="category-input" placeholder="Название...">
+            <div class="alert-message ml-15 mb-10 hide" id="category-edit-error"></div>
+        </div>
         <div class="block-btn">
             <!--                <button class="category-btn category-btn_blue">Редактировать</button>-->
-            <a rel="stylesheet" href="/income&expense" class="category-btn category-btn_green">Сохранить</a>
+            <a rel="stylesheet" href="javascript:void(0)" id="category-edit-ok" class="category-btn category-btn_green">Сохранить</a>
             <!--                <button class="category-btn category-btn_red">Удалить</button>-->
-            <a rel="stylesheet" href="/income&expense" class="category-btn category-btn_red">Отмена</a>
+            <a rel="stylesheet" id="category-edit-cancel" class="category-btn category-btn_red">Отмена</a>
         </div>
     </div>
 </main>
