@@ -3,86 +3,50 @@
 </header>
 <main class="main">
     <div class="container">
-        <section class="filter">
+        <section class="filter container__filter">
             <div class="filter__tabs">
-                <div class="tab-btn tab-btn_active">
-                    Сегодня
-                </div>
-                <div class="tab-btn tab-btn_passive">
-                    Неделя
-                </div>
-                <div class="tab-btn tab-btn_passive">
-                    Месяц
-                </div>
-                <div class="tab-btn tab-btn_passive">
-                    Год
-                </div>
-                <div class="tab-btn tab-btn_passive">
-                    Все
-                </div>
-                <div class="tab-btn tab-btn_passive">
-                    Интервал
-                </div>
+                <input type="radio" name="filter" id="radio1" class="tab-input" value="1">
+                <label class="tab-btn" for="radio1">Сегодня</label>
+
+                <input type="radio" name="filter" id="radio2" class="tab-input" value="2">
+                <label class="tab-btn" for="radio2">Неделя</label>
+
+                <input type="radio" name="filter" id="radio3" class="tab-input" value="3">
+                <label class="tab-btn" for="radio3">Месяц</label>
+
+                <input type="radio" name="filter" id="radio4" class="tab-input" value="4">
+                <label class="tab-btn" for="radio4">Год</label>
+
+                <input type="radio" name="filter" id="radio5" class="tab-input" value="5" checked>
+                <label class="tab-btn" for="radio5">Все</label>
+
+                <input type="radio" name="filter" id="radio6" class="tab-input" value="6">
+                <label class="tab-btn" for="radio6">Интервал</label>
             </div>
             <div class="filter__dates">
-                <label class="filter__label">с <input class="filter__input" type="date" placeholder="Date"></label>
-                <label class="filter__label">по <input class="filter__input" type="date" placeholder="Дата"></label>
+                <label class="filter__label">с <input id="date-from" class="filter__input" type="date"></label>
+                <label class="filter__label">по <input id="date-to" class="filter__input" type="date"></label>
             </div>
         </section>
+
         <section class="charts">
             <div class="panel">
                 <h2 class="panel__title">Доходы</h2>
-                <ul class="panel__keys keys">
-                    <li class="key">
-                        <strong class="key__percent color-1"></strong>
-                        <span class="key__choice">Red</span>
-                    </li>
-                    <li class="key">
-                        <strong class="key__percent color-2"></strong>
-                        <span class="key__choice">Orange</span>
-                    </li>
-                    <li class="key">
-                        <strong class="key__percent color-3"></strong>
-                        <span class="key__choice">Yellow</span>
-                    </li>
-                    <li class="key">
-                        <strong class="key__percent color-4"></strong>
-                        <span class="key__choice">Green</span>
-                    </li>
-                    <li class="key">
-                        <strong class="key__percent color-5"></strong>
-                        <span class="key__choice">Blue</span>
-                    </li>
-                </ul>
-                <div class="panel__chart chart chart_income"></div>
+                <ul id="income-legend" class="panel__keys keys"></ul>
+                <canvas id="income-pie" class="panel__chart chart"
+                        aria-label="Круговая диаграмма доходов за учётный период" role="img"></canvas>
             </div>
+
             <div class="border"></div>
+
             <div class="panel">
                 <h2 class="panel__title">Расходы</h2>
-                <ul class="panel__keys keys">
-                    <li class="key">
-                        <strong class="key__percent color-1"></strong>
-                        <span class="key__choice">Red</span>
-                    </li>
-                    <li class="key">
-                        <strong class="key__percent color-2"></strong>
-                        <span class="key__choice">Orange</span>
-                    </li>
-                    <li class="key">
-                        <strong class="key__percent color-3"></strong>
-                        <span class="key__choice">Yellow</span>
-                    </li>
-                    <li class="key">
-                        <strong class="key__percent color-4"></strong>
-                        <span class="key__choice">Green</span>
-                    </li>
-                    <li class="key">
-                        <strong class="key__percent color-5"></strong>
-                        <span class="key__choice">Blue</span>
-                    </li>
-                </ul>
-                <div class="panel__chart chart chart_expense"></div>
+                <ul id="expense-legend" class="panel__keys keys"></ul>
+                <canvas id="expense-pie" class="panel__chart chart"
+                        aria-label="Круговая диаграмма расходов за учётный период" role="img"></canvas>
             </div>
         </section>
     </div>
+    <script src="../components/chart.umd.min.js"></script>
+    <script src="../components/chartjs-plugin-datalabels.min.js"></script>
 </main>

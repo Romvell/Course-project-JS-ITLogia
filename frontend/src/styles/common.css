@@ -518,6 +518,7 @@
 }
 
 .panel {
+    max-width: 437px;
     display: flex;
     flex-direction: column;
     justify-content: start;
@@ -527,6 +528,13 @@
 }
 
 .chart {
+    max-width: 360px;
+    max-height: 360px;
+    width: 360px;
+    height: 360px;
+}
+
+.chart-demo {
     width: 360px;
     height: 360px;
     border-radius: 50%;

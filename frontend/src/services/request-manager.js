@@ -22,6 +22,24 @@ export class RequestManager {
         }
     }
 
+    // Запрос данных с бека
+    static async getOperations(dateFrom, dateTo) {
+        try {
+            const url = '/operations?period=interval&dateFrom=' + dateFrom + '&dateTo=' + dateTo;
+            const result = await CustomHttp.request(url);
+
+            if (result) {
+                if (result.error || !result.response) {
+                    throw new Error(result.message);
+                }
+                //this.showOperations(result);
+                return result;
+            }
+        } catch (error) {
+            console.log('Ошибка:' + error.message);
+        }
+    }
+
     // Запрос баланса с бека
     static async getBalance() {
         try {
@@ -30,7 +48,7 @@ export class RequestManager {
             if (result) {
                 if (result.error || !result.response) {
                     console.log(result);
-                    throw new Error(result.error.message);
+                    throw new Error(result.response.message);
                 }
                 return result.response;
             }

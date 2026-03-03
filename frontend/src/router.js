@@ -139,7 +139,7 @@ export class Router {
             },
             {
                 // Готово
-                route: '/dd',
+                route: '/incomeAdd',
                 title: 'Lumincoin Finance - Создание дохода',
                 template: '/templates/operation-page.html',
                 useLayout: '/templates/layout.html',
@@ -293,10 +293,14 @@ export class Router {
                     }
 
                     // Получение и отображение имени баланса счёта
-                    const balance = await RequestManager.getBalance();
-                    if (balance) {
-                        document.getElementById('balance').innerText = balance.balance + ' $';
+                    const accessToken = Auth.getAuthInfo(Auth.accessTokenKey);
+                    if (accessToken) {
+                        const balance = await RequestManager.getBalance();
+                        if (balance) {
+                            document.getElementById('balance').innerText = balance.balance + ' $';
+                        }
                     }
+
 
                     //Добавляем и удаляем классы из body по необходимости
                     //     document.body.classList.add('sidebar-mini');

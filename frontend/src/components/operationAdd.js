@@ -88,7 +88,7 @@ export class OperationAdd {
             try {
                 const result = await CustomHttp.request('/operations', 'POST', true, {
                     type: this.page,
-                    amount: this.sumElement.value,
+                    amount: +this.sumElement.value,
                     date: this.dateElement.value,
                     comment: comment,
                     category_id: category_id,
@@ -119,7 +119,7 @@ export class OperationAdd {
             const changedData = {};
             changedData.type = this.typeElement.value;
             changedData.category = this.categoriesElement.value;
-            changedData.amount = this.sumElement.value;
+            changedData.amount = +this.sumElement.value;
             changedData.date = this.dateElement.value;
             changedData.comment = this.commentElement.value;
 
@@ -136,8 +136,6 @@ export class OperationAdd {
             } catch (error) {
                 return console.log(error);
             }
-        } else {
-            console.log('invalid');
         }
     }
 
