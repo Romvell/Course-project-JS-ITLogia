@@ -210,6 +210,16 @@ export class OperationAdd {
             this.categoriesElement.nextElementSibling.classList.add('hide');
             categoryValid = true
         }
+        if (!this.commentElement.value) {
+            this.commentElement.style.borderColor = '#B00020';
+            this.commentElement.style.borderWidth = '2px';
+            this.commentElement.nextElementSibling.classList.remove('hide');
+            categoryValid = false
+        } else {
+            this.commentElement.removeAttribute('style');
+            this.commentElement.nextElementSibling.classList.add('hide');
+            categoryValid = true
+        }
 
         return (sumValid && dateValid && categoryValid);
     }
