@@ -6,7 +6,12 @@ import {Chart} from "chart.js/auto";
 export class Lumincoin {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
-        this.firstUseFlag = false;
+        this.incomeChartElement = document.getElementById('income-pie').getContext('2d');
+        this.expenseChartElement = document.getElementById('expense-pie').getContext('2d');
+        this.incomeChart = null;
+        this.expenseChart = null;
+        this.incomeConfig = null;
+        this.expenseConfig = null;
 
         // Проверяем наличие токена авторизации
         const accessToken = Auth.getAuthInfo(Auth.accessTokenKey);
@@ -14,49 +19,59 @@ export class Lumincoin {
             this.openNewRoute('/login');
         }
 
+        if (!this.incomeChartElement || !this.expenseChartElement) {
+            console.warn('Canvas элементы для графиков не найдены');
+            return;
+        }
+
         this.createChart().then();
     }
+
     //Создание диаграммы
     async createChart() {
-        const incomeChartElement = document.getElementById('income-pie').getContext('2d');
-        const expenseChartElement = document.getElementById('expense-pie').getContext('2d');
-        let incomeChart = null;
-        let expenseChart = null;
-        let incomeConfig = null;
-        let expenseConfig = null;
-
-        // Определяем начальное состояние фильтра и делаем соответствующий запрос
+        // Находим текущий выбранный фильтр (или берём первый)
         const radioButton = document
             .querySelectorAll('input[type="radio"][name="filter"]');
-        if (!this.firstUseFlag) {
-            for (const radio of radioButton) {
-                if (radio.checked) {
-                    incomeConfig = await this.createConfig('income', radio.value);
-                    expenseConfig = await this.createConfig('expense', radio.value);
-                    this.createLegend('income', incomeConfig.data.datasets[0].backgroundColor, incomeConfig.data.labels)
-                    this.createLegend('expense', expenseConfig.data.datasets[0].backgroundColor, expenseConfig.data.labels)
-
-                    incomeChart = new Chart(incomeChartElement, incomeConfig);
-                    expenseChart = new Chart(expenseChartElement, expenseConfig);
-                    this.firstUseFlag = true;
-                }
+        let currentFilter = this.getCurrentFilterValue(radioButton);
+        if (!currentFilter) {
+            // Если ничего не выбрано — выбираем пятый
+            const firstRadio = radioButton[4];
+            if (firstRadio) {
+                firstRadio.checked = true;
+                currentFilter = firstRadio.value;
             }
         }
 
-        // Вызов функции при нажатии на кнопку фильтра
-        for (const radio of radioButton) {
-            radio.addEventListener('click', async () => {
-                incomeChart.destroy();
-                expenseChart.destroy();
-                incomeConfig = await this.createConfig('income', radio.value);
-                expenseConfig = await this.createConfig('expense', radio.value);
-                this.createLegend('income', incomeConfig.data.datasets[0].backgroundColor, incomeConfig.data.labels)
-                this.createLegend('expense', expenseConfig.data.datasets[0].backgroundColor, expenseConfig.data.labels)
-                incomeChart = new Chart(incomeChartElement, incomeConfig);
-                expenseChart = new Chart(expenseChartElement, expenseConfig);
+        // Первая отрисовка
+        await this.updateCharts(currentFilter);
+
+        // Подписываемся на изменение фильтра
+        radioButton.forEach(radio => {
+            radio.addEventListener('change', async (e) => {
+                await this.updateCharts(e.target.value);
             });
-        }
+        });
     };
+
+    // Функция обновления обоих графиков
+    async updateCharts(filterValue) {
+
+        if (this.incomeChart) {
+            this.incomeChart.destroy();
+        }
+        if (this.expenseChart) {
+            this.expenseChart.destroy();
+        }
+        this.incomeConfig = await this.createConfig('income', filterValue);
+        this.expenseConfig = await this.createConfig('expense', filterValue);
+        this.createLegend('income',
+            this.incomeConfig.data.datasets[0].backgroundColor, this.incomeConfig.data.labels)
+        this.createLegend('expense',
+            this.expenseConfig.data.datasets[0].backgroundColor, this.expenseConfig.data.labels)
+        this.incomeChart = new Chart(this.incomeChartElement, this.incomeConfig);
+        this.expenseChart = new Chart(this.expenseChartElement, this.expenseConfig);
+    }
+
     //Создание легенды
     createLegend(operationsType, colors, labels) {
         const legendElement = document.getElementById(operationsType + '-legend');
@@ -75,10 +90,11 @@ export class Lumincoin {
             legendElement.appendChild(itemElement);
         });
     }
+
     //Создание конфигурации диаграммы
     async createConfig(operationsType, radioValue) {
         const chartData = await this.preparedData(operationsType, radioValue);
-        return  {
+        return {
             type: 'pie',
             data: {
                 labels: chartData.labels,
@@ -98,6 +114,15 @@ export class Lumincoin {
             },
         }
     }
+
+    // Получаем текущее значение выбранного radio
+    getCurrentFilterValue(radios) {
+        for (const radio of radios) {
+            if (radio.checked) return radio.value;
+        }
+        return null;
+    }
+
     //Подготовка данных для диаграммы
     async preparedData(operationsType, radioValue) {
         const MAX_CHART_SECTORS = 5;
