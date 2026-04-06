@@ -1,5 +1,5 @@
-import {Auth} from "./auth.js";
-import config from "../../config/config.js";
+import {Auth} from "./auth.ts";
+import config from "../../config/config.ts";
 
 export class CustomHttp {
     static async request(url, method = "GET", useAuth = true, body = null) {

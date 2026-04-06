@@ -1,9 +1,24 @@
 import {Lumincoin} from "./components/lumincoin.js";
 import {Form} from "./components/form.js";
 import {Logout} from "./components/logout.js";
-import {IncomeExpense} from "./components/income&expense";
+import {IncomeExpense} from "./components/income&expense.js";
+import type {RouteType} from "./types/route.type.js";
+import {Income} from "./components/income.js";
+import {IncomeAdd} from "./components/incomeAdd.js";
+import {IncomeEdit} from "./components/incomeEdit.js";
+import {Expense} from "./components/expense.js";
+import {ExpenseAdd} from "./components/expenseAdd.js";
+import {ExpenseEdit} from "./components/expenseEdit.js";
+import {CategoryAdd} from "./components/categoryAdd.js";
+import {CategoryEdit} from "./components/categoryEdit.js";
+import {ModalWindow} from "./components/modalWindow.js";
 
 export class Router {
+    private titlePageElement: HTMLElement | null;
+    private stylesElement: HTMLElement | null;
+    readonly contentPageElement: HTMLElement | null;
+    private routes: RouteType[];
+
     constructor() {
         this.titlePageElement = document.getElementById('title');
         this.stylesElement = document.getElementById('common-styles');
@@ -15,7 +30,7 @@ export class Router {
                 title: 'Lumincoin Finance',
                 template: '/templates/index.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/index.css',
+                styles: [],
                 load: () => {
                     new Lumincoin(this.openNewRoute.bind(this));
                 },
@@ -40,12 +55,16 @@ export class Router {
                     //document.body.classList.add('login-page') //добавление классов к body
                     new Form('login', this.openNewRoute.bind(this));
                 },
-                unload: () => {
-                    //document.body.classList.remove('login-page') //удаление классов из body
-                }
+                // unload: () => {
+                //     //document.body.classList.remove('login-page') //удаление классов из body
+                // }
             },
             {
                 route: '/logout',
+                title: '',
+                template: '',
+                useLayout: '',
+                styles: [],
                 load: () => {
                     new Logout(this.openNewRoute.bind(this));
                 }
@@ -55,7 +74,7 @@ export class Router {
                 title: 'Lumincoin Finance - Доходы и расходы',
                 template: '/templates/income&expense.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new IncomeExpense(this.openNewRoute.bind(this));
                 },
@@ -65,7 +84,7 @@ export class Router {
                 title: 'Lumincoin Finance - Доходы',
                 template: '/templates/income.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new Income(this.openNewRoute.bind(this));
                 },
@@ -75,7 +94,7 @@ export class Router {
                 title: 'Lumincoin Finance - Создание категории доходов',
                 template: '/templates/income-add.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new IncomeAdd(this.openNewRoute.bind(this));
                 },
@@ -85,7 +104,7 @@ export class Router {
                 title: 'Lumincoin Finance - Редактирование категории доходов',
                 template: '/templates/income-edit.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new IncomeEdit(this.openNewRoute.bind(this));
                 },
@@ -95,7 +114,7 @@ export class Router {
                 title: 'Lumincoin Finance - Расходы',
                 template: '/templates/expense.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new Expense(this.openNewRoute.bind(this));
                 },
@@ -105,7 +124,7 @@ export class Router {
                 title: 'Lumincoin Finance - Создание категории расходов',
                 template: '/templates/expense-add.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new ExpenseAdd(this.openNewRoute.bind(this));
                 },
@@ -115,7 +134,7 @@ export class Router {
                 title: 'Lumincoin Finance - Редактирование категории расходов',
                 template: '/templates/expense-edit.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new ExpenseEdit(this.openNewRoute.bind(this));
                 },
@@ -125,7 +144,7 @@ export class Router {
                 title: 'Lumincoin Finance - Создание дохода/расхода',
                 template: '/templates/category-add.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new CategoryAdd(this.openNewRoute.bind(this));
                 },
@@ -135,7 +154,7 @@ export class Router {
                 title: 'Lumincoin Finance - Редактирование дохода/расхода',
                 template: '/templates/category-edit.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new CategoryEdit(this.openNewRoute.bind(this));
                 },
@@ -145,7 +164,7 @@ export class Router {
                 title: 'Выход из системы',
                 template: '/templates/modalWindow.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new ModalWindow(this.openNewRoute.bind(this));
                 },
@@ -155,7 +174,7 @@ export class Router {
                 title: 'Lumincoin Finance - Удалить категорию',
                 template: '/templates/modal-income-del.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new ModalWindow(this.openNewRoute.bind(this));
                 },
@@ -165,7 +184,7 @@ export class Router {
                 title: 'Lumincoin Finance - Удалить категорию',
                 template: '/templates/modal-expense-del.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new ModalWindow(this.openNewRoute.bind(this));
                 },
@@ -175,7 +194,7 @@ export class Router {
                 title: 'Lumincoin Finance - Удалить операцию',
                 template: '/templates/modal-operation-del.html',
                 useLayout: '/templates/layout.html',
-                // styles: 'styles/form.css',
+                styles: [],
                 load: () => {
                     new ModalWindow(this.openNewRoute.bind(this));
                 },
@@ -183,30 +202,34 @@ export class Router {
         ]
     }
 
-    initEvents() {
+    private initEvents(): void {
         window.addEventListener('DOMContentLoaded', this.activateRoute.bind(this));
         window.addEventListener('popstate', this.activateRoute.bind(this));
         document.addEventListener('click', this.clickHandler.bind(this));
     }
 
-    async openNewRoute(url) {
-        const currentRoute = window.location.pathname;
+    private async openNewRoute(url: string): Promise<void> {
+        const currentRoute: string = window.location.pathname;
         history.pushState({}, '', url);
         await this.activateRoute(null, currentRoute);
     }
 
-    async clickHandler(e) {
-        let element = null;
-        if (e.target.nodeName === 'A') {
-            element = e.target;
-        } else if (e.target.parentNode.nodeName === 'A') {
-            element = e.target.parentNode
+    private async clickHandler(e: MouseEvent): Promise<void> {
+        let element: HTMLElement | null = null;
+        if (e) {
+            if ((e.target as Node).nodeName === 'A') {
+                element = e.target as HTMLElement;
+            } else if ((e.target as Node).parentNode) {
+                if ((e.target as Node).parentNode.nodeName === 'A') {
+                    element = (e.target as Node).parentNode
+                }
+            }
         }
 
         if (element) {
             e.preventDefault();
 
-            const url = element.href.replace(window.location.origin, '');
+            const url: string | null = element.href.replace(window.location.origin, '');
             if (!url || url === '/#' || url.startsWith('javascript:void(0)')) {
                 return;
             }
@@ -215,51 +238,63 @@ export class Router {
         }
     }
 
-    async activateRoute(e, oldRoute = null) {
+    private async activateRoute(e: Event | null, oldRoute: string | null = null): Promise<void> {
         if (oldRoute) {
-            const currentRoute = this.routes.find(item => item.route === oldRoute);
+            const currentRoute: RouteType | undefined = this.routes.find(item => item.route === oldRoute);
             if (currentRoute && currentRoute.styles && currentRoute.styles.length > 0) {
                 currentRoute.styles.forEach(style => {
-                    document.querySelector(`link[href='/styles/${style}']`).remove();
+                    const link: HTMLElement | null = document.querySelector(`link[href='/styles/${style}']`);
+                    if (link) {
+                        link.remove();
+                    }
                 })
             }
 
-            if (currentRoute && currentRoute.unload && typeof currentRoute.unload === 'function') {
-                currentRoute.unload();
-            }
+            // Пока не используется
+            // if (currentRoute && currentRoute.unload && typeof currentRoute.unload === 'function') {
+            //     currentRoute.unload();
+            // }
         }
 
-        const urlRoute = window.location.pathname;
-        const newRoute = this.routes.find(item => item.route === urlRoute);
+        const urlRoute: string = window.location.pathname;
+        const newRoute: RouteType | undefined = this.routes.find(item => item.route === urlRoute);
         if (newRoute) {
             if (newRoute.styles && newRoute.styles.length > 0) {
                 newRoute.styles.forEach(style => {
-                    const link = document.createElement('link');
+                    const link: HTMLLinkElement = document.createElement('link');
                     link.rel = 'stylesheet';
                     link.href = '/styles/' + style;
-                    this.stylesElement.after(link);
+                    if (this.stylesElement) {
+                        this.stylesElement.after(link);
+                    }
                 });
             }
             if (newRoute.title) {
-                this.titlePageElement.innerText = newRoute.title;
+                if (this.titlePageElement) {
+                    this.titlePageElement.innerText = newRoute.title;
+                }
             }
             if (newRoute.template) {
 
-                let contentBlock = this.contentPageElement;
+                let contentBlock: HTMLElement | null = this.contentPageElement;
                 if (newRoute.useLayout) {
-                    this.contentPageElement.innerHTML =
-                        await fetch(newRoute.useLayout).then(response => response.text());
-                    contentBlock = document.getElementById('content-layout');
-                    //Добавляем и удаляем классы из body по необходимости
-                    //     document.body.classList.add('sidebar-mini');
-                    //     document.body.classList.add('layout-fixed');
-                    // } else {
-                    //     document.body.classList.remove('sidebar-mini');
-                    //     document.body.classList.remove('layout-fixed');
+                    if (this.contentPageElement) {
+                        // Допустимая конструкция?
+                        this.contentPageElement.innerHTML =
+                            await fetch(new URL(newRoute.useLayout as string)).then(response => response.text());
+                        contentBlock = document.getElementById('content-layout');
+                        //Добавляем и удаляем классы из body по необходимости
+                        //     document.body.classList.add('sidebar-mini');
+                        //     document.body.classList.add('layout-fixed');
+                        // } else {
+                        //     document.body.classList.remove('sidebar-mini');
+                        //     document.body.classList.remove('layout-fixed');
+                    }
                 }
-                contentBlock.innerHTML =
+                if (contentBlock) {
+                    contentBlock.innerHTML =
                     await fetch(newRoute.template).then(response => response.text());
-
+                }
             }
             if (newRoute.load && typeof newRoute.load === 'function') {
                 newRoute.load();

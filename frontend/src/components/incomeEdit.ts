@@ -1,6 +1,6 @@
-import {Auth} from "../services/auth.js";
+import {Auth} from "../services/auth";
 
-export class ExpenseEdit {
+export class IncomeEdit {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
         const accessToken = Auth.getAuthInfo(Auth.accessTokenKey);

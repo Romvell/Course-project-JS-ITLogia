@@ -1,5 +1,5 @@
-import {Auth} from "../services/auth.js";
-import {CustomHttp} from "../services/custom-http.js";
+import {Auth} from "../services/auth";
+import {CustomHttp} from "../services/custom-http";
 
 export class Logout {
 

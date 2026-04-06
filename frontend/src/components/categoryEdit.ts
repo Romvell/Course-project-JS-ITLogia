@@ -1,6 +1,6 @@
-import {Auth} from "../services/auth.js";
+import {Auth} from "../services/auth";
 
-export class ExpenseAdd {
+export class CategoryEdit {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
         const accessToken = Auth.getAuthInfo(Auth.accessTokenKey);

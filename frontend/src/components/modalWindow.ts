@@ -1,6 +1,6 @@
-import {Auth} from "../services/auth.js";
+import {Auth} from "../services/auth";
 
-export class Expense {
+export class ModalWindow {
     constructor(openNewRoute) {
         this.openNewRoute = openNewRoute;
         const accessToken = Auth.getAuthInfo(Auth.accessTokenKey);

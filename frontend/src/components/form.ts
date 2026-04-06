@@ -1,5 +1,5 @@
-import {CustomHttp} from "../services/custom-http.js";
-import {Auth} from "../services/auth.js";
+import {CustomHttp} from "../services/custom-http";
+import {Auth} from "../services/auth";
 
 export class Form {
     constructor(page, openNewRoute) {
